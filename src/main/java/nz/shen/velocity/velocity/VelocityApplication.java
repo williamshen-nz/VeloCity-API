@@ -16,6 +16,11 @@ public class VelocityApplication {
 
         readCycleCrashes();
         System.out.println("Read Cycle Crashes successfully!");
+
+        System.out.println("==========\nAPI DOCS:");
+        System.out.println("/getRoute?origin=...&destination=...&option=...");
+        System.out.println("Choose option = Shortest, Fastest, Safest, Dangerous, or Scenic");
+        System.out.println("=========");
     }
 
 	private static void readCycleCrashes() {

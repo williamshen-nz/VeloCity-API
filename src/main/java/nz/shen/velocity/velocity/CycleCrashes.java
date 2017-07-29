@@ -43,4 +43,5 @@ public class CycleCrashes {
     public void addCrash(String date, String severity, double latitude, double longitude) {
         crashes.add(new CycleCrash(date, severity, latitude, longitude));
     }
+
 }
