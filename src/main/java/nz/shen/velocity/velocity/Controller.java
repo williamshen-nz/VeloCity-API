@@ -75,6 +75,8 @@ public class Controller {
                 }
             }
             return JSON.stringify(best);
+        } else if (userOption.equals(Option.Scenic)) {
+            return JSON.stringify("{message: \"Error! Scenic routes are not supported at the moment.\"");
         } else {
             Random random = new Random();
             return JSON.stringify(directions.get(random.nextInt(directions.size())));
