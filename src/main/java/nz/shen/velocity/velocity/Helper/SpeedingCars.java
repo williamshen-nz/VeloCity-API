@@ -57,7 +57,7 @@ public class SpeedingCars {
     private HashMap<String, String> fillHm(){
         HashMap<String, String> hm = new HashMap<>();
 
-        String csvFile = path + "Traffic_Camera_Locations_-_Point_Map.csv";
+        String csvFile = path + "Traffic_Camera_Locations_Point_Map.csv";
         String line = "";
         String cvsSplitBy = ",";
 
@@ -114,7 +114,7 @@ public class SpeedingCars {
 
 
     private void setDangerLocations(){
-        String csvFile = path + "Traffic_camera_offences_and_fines.csv";
+        String csvFile = path + "Traffic_Camera_Offences_and_Fines.csv";
         String line = "";
         String cvsSplitBy = ",";
 

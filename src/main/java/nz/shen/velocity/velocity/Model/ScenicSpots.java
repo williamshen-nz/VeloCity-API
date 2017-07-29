@@ -45,7 +45,7 @@ public class ScenicSpots {
 
         ArrayList<ScenicSpot> spots = new ArrayList<>();
 
-        String csvFile = path + "scenic-spots.csv";
+        String csvFile = path + "Scenic_Spots.csv";
         String line;
         String cvsSplitBy = ",";
 
