@@ -76,6 +76,26 @@ public class DirectionsObject {
         this.waypoint_order = waypoint_order;
     }
 
+    private ArrayList<CycleCrashes.CycleCrash> crashes;
+
+    public ArrayList<CycleCrashes.CycleCrash> getCrashes() {
+        return crashes;
+    }
+
+    public void setCrashes(ArrayList<CycleCrashes.CycleCrash> crashes) {
+        this.crashes = crashes;
+    }
+
+    public ArrayList<String> speeding;
+
+    public ArrayList<String> getSpeeding() {
+        return speeding;
+    }
+
+    public void setSpeeding(ArrayList<String> speeding) {
+        this.speeding = speeding;
+    }
+
     public static class Northeast {
         public Northeast() {
         }

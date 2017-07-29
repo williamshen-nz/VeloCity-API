@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @RestController
 public class Controller {
@@ -28,13 +25,20 @@ public class Controller {
 
         // Google Maps request, works properly
         String json = Network.getRequest(Directions.getRequestString(origin, destination));
+        if (json == null || json.contains("ZERO_RESULTS")) {
+            return JSON.stringify(new Message("Error! Your request was not valid." +
+                    " Please try be more specific."));
+        }
+        System.out.println(Directions.getRequestString(origin, destination));
+
         Map<String, Object> result = JSON.parse(json);
         try {
             for (Object route : (ArrayList<Object>) result.get("routes")) {
                 directions.add(JSON.parse(JSON.stringify(route), DirectionsObject.class));
             }
         } catch (Exception e) {
-            return JSON.stringify("{message: \"Error! Your request was not valid. Please try be more specific.\"");
+            return JSON.stringify(new Message("Error! Your request was not valid." +
+                    " Please try be more specific."));
         }
 
         // Check user option and calculate accordingly
@@ -102,35 +106,49 @@ public class Controller {
         CycleCrashes crashes = VelocityApplication.cycleCrashes;
 
         int cycleCount = 0;
+        HashMap<LongLat.Square, CycleCrashes.CycleCrash> cycleHashmap = new HashMap<>();
 
         List<LongLat.Square> crashRange = new ArrayList<>();
         for (CycleCrashes.CycleCrash cc : crashes.getCrashes()) {
-            crashRange.add(LongLat.getRange(cc.getLongitude(), cc.getLatitude(), 50));
+            LongLat.Square toAdd = LongLat.getRange(cc.getLongitude(), cc.getLatitude(), 50);
+            crashRange.add(toAdd);
+            cycleHashmap.put(toAdd, cc);
         }
 
+        ArrayList<CycleCrashes.CycleCrash> crashList = new ArrayList<>();
         for (LongLat.Square s : crashRange) {
             for (NearestRoads.Coordinate c : coordinates) {
                 if (s.isInRange(c.getY(), c.getX())) {
+                    crashList.add(cycleHashmap.get(s));
                     cycleCount++;
                     break;
                 }
             }
         }
+
         score += cycleCount * 50;
 
         int speedingCount = 0;
         SpeedingCars speedingCars = VelocityApplication.speedingCars;
 
         crashRange = new ArrayList<>();
+
+        HashMap<LongLat.Square, String> speedingHashmap = new HashMap<>();
+
         for (String coord : speedingCars.getDangerLevel().keySet()) {
             if (coord.equals("")) continue;
-            crashRange.add(LongLat.getRange(Double.parseDouble(coord.split(" ")[0]),
-                    Double.parseDouble(coord.split(" ")[1]), 50));
+            LongLat.Square toAdd = LongLat.getRange(Double.parseDouble(coord.split(",")[0]),
+                    Double.parseDouble(coord.split(",")[1]), 50);
+            crashRange.add(toAdd);
+            speedingHashmap.put(toAdd, coord);
         }
+
+        ArrayList<String> speedingList = new ArrayList<>();
 
         for (LongLat.Square s : crashRange) {
             for (NearestRoads.Coordinate c : coordinates) {
                 if (s.isInRange(c.getX(), c.getY())) {
+                    speedingList.add(speedingHashmap.get(s));
                     speedingCount++;
                     break;
                 }
@@ -138,6 +156,8 @@ public class Controller {
         }
         score += speedingCount * 10;
 
+        direction.setCrashes(crashList);
+        direction.setSpeeding(speedingList);
 
         System.out.println("Route: " + direction.getSummary() + ", Crash Zones: " + cycleCount +
                 ", Speeding Zones: " + speedingCount + ", Score: " + score);

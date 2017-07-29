@@ -50,7 +50,7 @@ public class SpeedingCars {
 
         @Override
         public String toString() {
-            return lat + " " + longi;
+            return lat + "," + longi;
         }
     }
 
