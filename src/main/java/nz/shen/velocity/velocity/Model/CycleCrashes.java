@@ -6,12 +6,14 @@ import java.util.List;
 public class CycleCrashes {
     public class CycleCrash {
         private String date;
+        private String type;
         private String severity;
         private double latitude;
         private double longitude;
 
-        public CycleCrash(String date, String severity, double latitude, double longitude) {
+        public CycleCrash(String date, String type, String severity, double latitude, double longitude) {
             this.date = date;
+            this.type = type;
             this.severity = severity;
             this.latitude = latitude;
             this.longitude = longitude;
@@ -19,6 +21,10 @@ public class CycleCrashes {
 
         public String getDate() {
             return date;
+        }
+
+        public String getType() {
+            return type;
         }
 
         public String getSeverity() {
@@ -40,8 +46,8 @@ public class CycleCrashes {
         return crashes;
     }
 
-    public void addCrash(String date, String severity, double latitude, double longitude) {
-        crashes.add(new CycleCrash(date, severity, latitude, longitude));
+    public void addCrash(String date, String type, String severity, double latitude, double longitude) {
+        crashes.add(new CycleCrash(date, type, severity, latitude, longitude));
     }
 
 }

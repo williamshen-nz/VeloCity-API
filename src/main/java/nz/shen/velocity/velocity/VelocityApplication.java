@@ -1,4 +1,4 @@
-package nz.shen.velocity.velocity.Server;
+package nz.shen.velocity.velocity;
 
 import nz.shen.velocity.velocity.Model.CycleCrashes;
 import org.springframework.boot.SpringApplication;
@@ -19,8 +19,9 @@ public class VelocityApplication {
         System.out.println("Read Cycle Crashes successfully!");
 
         System.out.println("==========\nAPI DOCS:");
-        System.out.println("/getRoute?origin=...&destination=...&option=...");
-        System.out.println("Choose option = Shortest, Fastest, Safest, Dangerous, or Scenic");
+        System.out.println("1. /getRoute?origin=...&destination=...&option=...");
+        System.out.println("   Choose option = Shortest, Fastest, Safest, Dangerous, or Scenic");
+        System.out.println("2. /getCrashes\n   Gets the crashes in the ACT region");
         System.out.println("=========");
     }
 
@@ -40,7 +41,7 @@ public class VelocityApplication {
 				}
 				// use comma as separator
 				String[] crash = line.split(cvsSplitBy);
-				cycleCrashes.addCrash(crash[0], crash[1], Double.parseDouble(crash[6]), Double.parseDouble(crash[7]));
+				cycleCrashes.addCrash(crash[0], crash[2], crash[1], Double.parseDouble(crash[6]), Double.parseDouble(crash[7]));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

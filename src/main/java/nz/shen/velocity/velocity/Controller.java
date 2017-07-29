@@ -1,4 +1,4 @@
-package nz.shen.velocity.velocity.Server;
+package nz.shen.velocity.velocity;
 
 import nz.shen.velocity.velocity.Helper.Directions;
 import nz.shen.velocity.velocity.Helper.JSON;
@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Random;
 
 @RestController
-public class RouteController {
+public class Controller {
     @RequestMapping(value = "getRoute", method = RequestMethod.GET)
     public String getRoute(@RequestParam String origin,
                            @RequestParam String destination,
@@ -98,5 +98,11 @@ public class RouteController {
         }
         System.out.println("Route: " + direction.getSummary() + ", Score: " + score);
         return score;
+    }
+
+
+    @RequestMapping(value = "getCrashes", method = RequestMethod.GET)
+    public String getCrashData() {
+        return JSON.stringify(VelocityApplication.cycleCrashes);
     }
 }
