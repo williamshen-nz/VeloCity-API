@@ -14,5 +14,4 @@ public class Directions {
         this.end = end;
     }
 
-
 }
