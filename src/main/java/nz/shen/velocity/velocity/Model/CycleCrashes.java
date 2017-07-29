@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CycleCrashes {
+    public CycleCrashes() {}
+
     public class CycleCrash {
         private String date;
         private String type;
@@ -46,8 +48,11 @@ public class CycleCrashes {
         return crashes;
     }
 
+    public void setCrashes(List<CycleCrash> crashes) {
+        this.crashes = crashes;
+    }
+
     public void addCrash(String date, String type, String severity, double latitude, double longitude) {
         crashes.add(new CycleCrash(date, type, severity, latitude, longitude));
     }
-
 }
