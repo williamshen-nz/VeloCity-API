@@ -1,5 +1,6 @@
 package nz.shen.velocity.velocity;
 
+import nz.shen.velocity.velocity.Helper.SpeedingCars;
 import nz.shen.velocity.velocity.Model.CycleCrashes;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,12 +12,16 @@ import java.io.IOException;
 @SpringBootApplication
 public class VelocityApplication {
     static CycleCrashes cycleCrashes = new CycleCrashes();
+    static SpeedingCars speedingCars;
 
     public static void main(String[] args) {
         SpringApplication.run(VelocityApplication.class, args);
 
         readCycleCrashes();
         System.out.println("Read Cycle Crashes successfully!");
+
+        speedingCars = new SpeedingCars();
+        System.out.println("Speeding Cars loaded successfully!");
 
         System.out.println("==========\nAPI DOCS:");
         System.out.println("1. /getRoute?origin=...&destination=...&option=...");

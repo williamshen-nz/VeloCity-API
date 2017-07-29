@@ -8,7 +8,7 @@ public class LongLat {
     // range in metres
     public static Square getRange(double longitude, double latitude, double range) {
         Square edges = new Square(longitude + range * LONGITUDE_PER_METRE, longitude - range * LONGITUDE_PER_METRE,
-                latitude + range * LATITUDE_PER_METRE, latitude - range * LATITUDE_PER_METRE);
+                latitude - range * LATITUDE_PER_METRE, latitude + range * LATITUDE_PER_METRE);
         return edges;
     }
 

@@ -1,9 +1,6 @@
 package nz.shen.velocity.velocity;
 
-import nz.shen.velocity.velocity.Helper.Decoder;
-import nz.shen.velocity.velocity.Helper.Directions;
-import nz.shen.velocity.velocity.Helper.JSON;
-import nz.shen.velocity.velocity.Helper.Network;
+import nz.shen.velocity.velocity.Helper.*;
 import nz.shen.velocity.velocity.Model.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -104,24 +101,46 @@ public class Controller {
         List<NearestRoads.Coordinate> coordinates = Decoder.decode(direction.getOverviewPolyline().getPoints());
         CycleCrashes crashes = VelocityApplication.cycleCrashes;
 
-        int count = 0;
+        int cycleCount = 0;
 
-        List<LongLat.Square> cycleCrashRange = new ArrayList<>();
+        List<LongLat.Square> crashRange = new ArrayList<>();
         for (CycleCrashes.CycleCrash cc : crashes.getCrashes()) {
-            cycleCrashRange.add(LongLat.getRange(cc.getLongitude(), cc.getLatitude(),10000));
+            crashRange.add(LongLat.getRange(cc.getLongitude(), cc.getLatitude(), 50));
         }
 
-        for (LongLat.Square s : cycleCrashRange) {
+        for (LongLat.Square s : crashRange) {
             for (NearestRoads.Coordinate c : coordinates) {
-                if (s.isInRange(c.getX(), c.getY())) {
-                    count++;
+                if (s.isInRange(c.getY(), c.getX())) {
+                    cycleCount++;
                     break;
                 }
             }
         }
-        score += count * 50;
+        score += cycleCount * 50;
 
-        System.out.println("Route: " + direction.getSummary() + ", Crash Zones: " + count + ", Score: " + score);
+        int speedingCount = 0;
+        SpeedingCars speedingCars = VelocityApplication.speedingCars;
+
+        crashRange = new ArrayList<>();
+        for (String coord : speedingCars.getDangerLevel().keySet()) {
+            if (coord.equals("")) continue;
+            crashRange.add(LongLat.getRange(Double.parseDouble(coord.split(" ")[0]),
+                    Double.parseDouble(coord.split(" ")[1]), 50));
+        }
+
+        for (LongLat.Square s : crashRange) {
+            for (NearestRoads.Coordinate c : coordinates) {
+                if (s.isInRange(c.getX(), c.getY())) {
+                    speedingCount++;
+                    break;
+                }
+            }
+        }
+        score += speedingCount * 10;
+
+
+        System.out.println("Route: " + direction.getSummary() + ", Crash Zones: " + cycleCount +
+                ", Speeding Zones: " + speedingCount + ", Score: " + score);
         return score;
     }
 
