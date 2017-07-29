@@ -1,16 +1,17 @@
 package nz.shen.velocity.velocity;
 
+import nz.shen.velocity.velocity.Helper.Decoder;
 import nz.shen.velocity.velocity.Helper.Directions;
 import nz.shen.velocity.velocity.Helper.JSON;
 import nz.shen.velocity.velocity.Helper.Network;
-import nz.shen.velocity.velocity.Model.DirectionsObject;
-import nz.shen.velocity.velocity.Model.Option;
+import nz.shen.velocity.velocity.Model.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -98,6 +99,29 @@ public class Controller {
                 score += 40;
             }
         }
+
+        // Penalties for passing dangerous areas
+        List<NearestRoads.Coordinate> coordinates = Decoder.decode(direction.getOverviewPolyline().getPoints());
+        CycleCrashes crashes = VelocityApplication.cycleCrashes;
+
+        int count = 0;
+
+        List<LongLat.Square> cycleCrashRange = new ArrayList<>();
+        for (CycleCrashes.CycleCrash cc : crashes.getCrashes()) {
+            cycleCrashRange.add(LongLat.getRange(cc.getLongitude(), cc.getLatitude(),10));
+        }
+
+        for (LongLat.Square s : cycleCrashRange) {
+            for (NearestRoads.Coordinate c : coordinates) {
+                if (s.isInRange(c.getY(), c.getX())) {
+                    count++;
+                    break;
+                }
+            }
+        }
+
+        score += count * 50;
+
         System.out.println("Route: " + direction.getSummary() + ", Score: " + score);
         return score;
     }

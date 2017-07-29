@@ -10,14 +10,17 @@ import java.util.Random;
 public class NearestRoads {
     private static final String API_KEY = "AIzaSyDiWD_CIwQlKylcSYTrxAwrEihVQB19jI4";
 
-    static class Coordinate {
-        double x;
-        double y;
+    public static class Coordinate{
+        private double x;
+        private double y;
 
-        Coordinate(double x, double y) {
+        public Coordinate(double x, double y) {
             this.x = x;
             this.y = y;
         }
+
+        public double getX() {return x;}
+        public double getY() {return y;}
 
         @Override
         public String toString() {
@@ -25,23 +28,23 @@ public class NearestRoads {
         }
     }
 
-    private Coordinate left, right;
+    private Coordinate start, end;
     private Random random = new Random();
 
     NearestRoads(double x1, double y1, double x2, double y2) {
-        this.left = new Coordinate(x1, y1);
-        this.right = new Coordinate(x2, y2);
+        this.start = new Coordinate(x1, y1);
+        this.end = new Coordinate(x2, y2);
     }
 
     private Coordinate getCentre() {
-        return new Coordinate((left.x + right.x) / 2, (left.y + right.y) / 2);
+        return new Coordinate((start.x + end.x)/2, (start.y + end.y)/2);
     }
 
     private List<Coordinate> getCoords() {
         int num = 10;
 
         Coordinate centre = getCentre();
-        double radius = Math.sqrt((left.x - centre.x) * (left.x - centre.x) + (left.y - centre.y) * (left.y - centre.y));
+        double radius = Math.sqrt((start.x - centre.x) * (start.x - centre.x) + (start.y - centre.y) * (start.y - centre.y));
 
         List<Coordinate> coordinates = new ArrayList<>();
         for (int i = 0; i < num; i++) {
