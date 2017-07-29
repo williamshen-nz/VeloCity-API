@@ -1,4 +1,4 @@
-package nz.shen.velocity.velocity;
+package nz.shen.velocity.velocity.Model;
 
 import java.util.ArrayList;
 import java.util.List;

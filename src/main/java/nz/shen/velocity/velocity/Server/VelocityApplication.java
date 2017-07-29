@@ -1,5 +1,6 @@
-package nz.shen.velocity.velocity;
+package nz.shen.velocity.velocity.Server;
 
+import nz.shen.velocity.velocity.Model.CycleCrashes;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

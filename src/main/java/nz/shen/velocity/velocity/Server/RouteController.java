@@ -1,5 +1,10 @@
-package nz.shen.velocity.velocity;
+package nz.shen.velocity.velocity.Server;
 
+import nz.shen.velocity.velocity.Helper.Directions;
+import nz.shen.velocity.velocity.Helper.JSON;
+import nz.shen.velocity.velocity.Helper.Network;
+import nz.shen.velocity.velocity.Model.DirectionsObject;
+import nz.shen.velocity.velocity.Model.Option;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;

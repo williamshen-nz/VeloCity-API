@@ -1,4 +1,4 @@
-package nz.shen.velocity.velocity;
+package nz.shen.velocity.velocity.Helper;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

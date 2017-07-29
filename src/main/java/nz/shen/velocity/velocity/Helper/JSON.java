@@ -1,4 +1,4 @@
-package nz.shen.velocity.velocity;
+package nz.shen.velocity.velocity.Helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

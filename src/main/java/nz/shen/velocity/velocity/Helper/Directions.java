@@ -1,4 +1,4 @@
-package nz.shen.velocity.velocity;
+package nz.shen.velocity.velocity.Helper;
 
 public class Directions {
     private static final String SITE_URL = "https://maps.googleapis.com/maps/api/directions/json?";
