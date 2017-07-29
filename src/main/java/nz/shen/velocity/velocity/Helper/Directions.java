@@ -10,16 +10,7 @@ public class Directions {
     private static final String ALTERNATIVES = "&alternatives=true";
 
     public static String getRequestString(String ORIGIN, String DESTINATION) {
-        String request = "";
-        request += SITE_URL;
-        request += ORIGIN_STRING;
-        request += ORIGIN;
-        request += DESTINATION_STRING;
-        request += DESTINATION;
-        request += MODE_STRING;
-        request += ALTERNATIVES;
-        request += KEY_STRING;
-        request += API_KEY;
-        return request;
+        return SITE_URL + ORIGIN_STRING + ORIGIN + DESTINATION_STRING + DESTINATION +
+                MODE_STRING + ALTERNATIVES + KEY_STRING + API_KEY;
     }
 }

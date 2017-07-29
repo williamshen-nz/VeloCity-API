@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CycleCrashes {
-    public CycleCrashes() {}
+    public CycleCrashes() {
+    }
 
     public class CycleCrash {
         private String date;

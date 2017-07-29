@@ -10,7 +10,7 @@ import java.util.Random;
 public class NearestRoads {
     private static final String API_KEY = "AIzaSyDiWD_CIwQlKylcSYTrxAwrEihVQB19jI4";
 
-    static class Coordinate{
+    static class Coordinate {
         double x;
         double y;
 
@@ -20,7 +20,7 @@ public class NearestRoads {
         }
 
         @Override
-        public String toString(){
+        public String toString() {
             return x + "," + y;
         }
     }
@@ -34,7 +34,7 @@ public class NearestRoads {
     }
 
     private Coordinate getCentre() {
-        return new Coordinate((left.x + right.x)/2, (left.y + right.y)/2);
+        return new Coordinate((left.x + right.x) / 2, (left.y + right.y) / 2);
     }
 
     private List<Coordinate> getCoords() {

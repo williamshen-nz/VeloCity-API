@@ -12,7 +12,7 @@ public class Network {
         HttpURLConnection connection = null;
 
         try {
-            //Create connection
+            // Create connection
             URL url = new URL(targetURL);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -22,12 +22,12 @@ public class Network {
             connection.setUseCaches(false);
             connection.setDoOutput(true);
 
-            //Send request
+            // Send request
             DataOutputStream wr = new DataOutputStream(
                     connection.getOutputStream());
             wr.close();
 
-            //Get Response
+            // Get Response
             InputStream is = connection.getInputStream();
             BufferedReader rd = new BufferedReader(new InputStreamReader(is));
             StringBuilder response = new StringBuilder(); // or StringBuffer if Java version 5+
