@@ -96,6 +96,16 @@ public class DirectionsObject {
         this.speeding = speeding;
     }
 
+    private ArrayList<ScenicSpots.ScenicSpot> scenicspots;
+
+    public ArrayList<ScenicSpots.ScenicSpot> getScenicspots() {
+        return scenicspots;
+    }
+
+    public void setScenicspots(ArrayList<ScenicSpots.ScenicSpot> scenicspots) {
+        this.scenicspots = scenicspots;
+    }
+
     public static class Northeast {
         public Northeast() {
         }

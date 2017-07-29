@@ -78,11 +78,51 @@ public class Controller {
             }
             return JSON.stringify(best);
         } else if (userOption.equals(Option.Scenic)) {
-            return JSON.stringify("{message: \"Error! Scenic routes are not supported at the moment.\"");
+            int min = Integer.MAX_VALUE;
+            DirectionsObject best = null;
+            for (DirectionsObject current : directions) {
+                int tom = evaluateScenic(current);
+                if (tom < min) {
+                    min = tom;
+                    best = current;
+                }
+            }
+            return JSON.stringify(best);
         } else {
             Random random = new Random();
             return JSON.stringify(directions.get(random.nextInt(directions.size())));
         }
+    }
+
+    private int evaluateScenic(DirectionsObject direction) {
+        int score = direction.getLegs().get(0).getDistance().getValue();
+        List<NearestRoads.Coordinate> coordinates = Decoder.decode(direction.getOverviewPolyline().getPoints());
+
+        int scenic_count = 0;
+        HashMap<LongLat.Square, ScenicSpots.ScenicSpot> scenicHashmap = new HashMap<>();
+
+        List<LongLat.Square> scenicRange = new ArrayList<>();
+        for (ScenicSpots.ScenicSpot s : ScenicSpots.getScenicSpots()) {
+            LongLat.Square toAdd = LongLat.getRange(s.getLongitude(), s.getLatitude(), 1500);
+            scenicRange.add(toAdd);
+            scenicHashmap.put(toAdd, s);
+        }
+
+        ArrayList<ScenicSpots.ScenicSpot> scenicList = new ArrayList<>();
+        for (LongLat.Square s : scenicRange) {
+            for (NearestRoads.Coordinate c : coordinates) {
+                if (s.isInRange(c.getY(), c.getX())) {
+                    scenicList.add(scenicHashmap.get(s));
+                    scenic_count++;
+                    break;
+                }
+            }
+        }
+
+        score -= scenic_count * 800;
+        direction.setScenicspots(scenicList);
+
+        return score;
     }
 
     private int evaluate(DirectionsObject direction) {
