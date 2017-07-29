@@ -13,13 +13,18 @@ public class RouteController {
     public String getRoute(@RequestParam String origin,
                          @RequestParam String destination,
                          @RequestParam String option) {
+        // Fix query string if required
+        origin = origin.replace(" ", "+");
+        destination = destination.replace(" ", "+");
 
+        // Get user request
         Option userOption = Option.valueOf(option);
-        System.out.println(origin);
-        System.out.println(destination);
-        System.out.println(option);
 
-        return JSON.stringify("HEY BRO");
+        // Create directions request
+        Directions directions = new Directions(origin, destination);
+
+        String routes = Network.getRequest(directions.getRequestString());
+        return routes;
     }
 
 }
