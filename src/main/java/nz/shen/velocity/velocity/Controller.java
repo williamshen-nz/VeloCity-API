@@ -108,21 +108,20 @@ public class Controller {
 
         List<LongLat.Square> cycleCrashRange = new ArrayList<>();
         for (CycleCrashes.CycleCrash cc : crashes.getCrashes()) {
-            cycleCrashRange.add(LongLat.getRange(cc.getLongitude(), cc.getLatitude(),10));
+            cycleCrashRange.add(LongLat.getRange(cc.getLongitude(), cc.getLatitude(),10000));
         }
 
         for (LongLat.Square s : cycleCrashRange) {
             for (NearestRoads.Coordinate c : coordinates) {
-                if (s.isInRange(c.getY(), c.getX())) {
+                if (s.isInRange(c.getX(), c.getY())) {
                     count++;
                     break;
                 }
             }
         }
-
         score += count * 50;
 
-        System.out.println("Route: " + direction.getSummary() + ", Score: " + score);
+        System.out.println("Route: " + direction.getSummary() + ", Crash Zones: " + count + ", Score: " + score);
         return score;
     }
 
